@@ -237,3 +237,59 @@ void BFS(ALGraph G,int v){
 }
 ```
 
+最小生成树（prim算法） //返回最小树的边权和
+```cpp
+int Prim(MGraph G){
+    int minDist[MaxVertexNum];
+    bool inTree[MaxVertexNum];
+    int sum = 0;
+    for(int i = 1;i<G.vxNum;i++){
+        if(!inTree[j] && minDist[j]<min){
+            min = minDist[j];
+            u = j;
+        }
+    }
+    if(u==-1) break; //图不连通
+    inTree[u] = true;
+    sum += min;
+    for(int j=0;j<G.vexNum;j++){
+        if(!inTree[j] && G.edges[u][j]<minDist[j]){
+            minDist[j] = G.edges[u][j];
+        }
+    }
+    return sum;
+}
+```
+
+求图中所有连通分量的个数（利用DFS计数）
+```cpp
+int Connected_Components(MGraph G){
+    int count = 0;
+    for(int i=0;i<G.vexNum;i++){
+        visited[i] = false;
+    }
+    for(int i=0;i<G.vexNum;i++){
+        if(!visited[i]){
+            DFS(G,i);
+            count++;
+        }
+    }
+    return count;
+}
+```
+
+判断图是否为强连通图（有向图需要从每个顶点出发进行DFS）
+```cpp
+bool IsStrongly_Connected(MGraph G){
+    for(int i=0;i<G.vexNum;i++){
+        for(int j=0;j<G.vexNum;j++){
+            visited[j] = false;
+        }
+        DFS(G,i);
+        for(int j=0;j<G.vexNum;j++){
+            if(!visited[j]) return false;
+        }
+    }
+    return true;
+}
+```
